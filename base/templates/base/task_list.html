@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container form {
+            margin-bottom: 20px;
+        }
+        .container form input[type="text"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .container form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .container form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .container .add-task-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .container .add-task-btn:hover {
+            background-color: #218838;
+        }
+        .container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .container th, .container td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        .container th {
+            background-color: #f0f0f0;
+        }
+        .container td a {
+            padding: 5px 10px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+        .container td a:hover {
+            background-color: #0056b3;
+        }
+        .container td:first-child {
+            font-weight: bold;
+        }
+        .container .no-items {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if request.user.is_authenticated %}
+            <p>Author Name : {{ request.user }}</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+        <h1>My To Do List</h1>
+        <a href="{% url 'task_create' %}" class="add-task-btn">Add Task</a>
+        <form action="">
+            <input type="text" name="search_area" placeholder="Search...">
+            <input type="submit" value="Search">
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tasks %}
+                    <tr>
+                        <td>{{ t.title }}</td>
+                        <td>
+                            <a href="{% url 'task_detail' t.pk %}">View</a> |
+                            <a href="{% url 'task_update' t.pk %}">Edit</a> |
+                            <a href="{% url 'task_delete' t.pk %}">Delete</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2" class="no-items">No Items in List</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

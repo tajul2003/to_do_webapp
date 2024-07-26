@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container form {
+            margin-top: 20px;
+        }
+        .container form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .container form input[type="submit"]:hover {
+            background-color: #c82333;
+        }
+        .container a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Delete Task</h1>
+        <form action="{% url 'task_delete' tasks.id %}" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete this task "{{ tasks.title }}"?</p>
+            <input type="submit" value="Delete">
+        </form>
+        <a href="{% url 'task_list' %}">Cancel</a>
+    </div>
+</body>
+</html>

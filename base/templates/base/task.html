@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .container p {
+            margin-bottom: 10px;
+        }
+        .container a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .container a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Detail</h1>
+        <p><strong>Title:</strong> {{ task_detail.title }}</p>
+        <p><strong>Description:</strong> {{ task_detail.description }}</p>
+        <p><strong>Complete:</strong> {% if task_detail.complete %}Yes{% else %}No{% endif %}</p>
+        <p><strong>Created:</strong> {{ task_detail.created }}</p>
+        <a href="{% url 'task_list' %}">Back to Task List</a>
+    </div>
+</body>
+</html>
